@@ -1,7 +1,7 @@
 import * as THREE from 'three/webgpu'
 import { Fn, positionWorld, reference } from "three/tsl";
 import { Game } from "../Game";
-import { MeshGridMaterial, MeshGridMaterialLine } from "../Materials/Meshgridmaterial";
+import { MeshGridMaterial, MeshGridMaterialLine } from "../Materials/MeshGridMaterial";
 import { MeshDefaultMaterial } from '../Materials/MeshDefaultMaterial';
 
 export class Grid {
@@ -45,7 +45,7 @@ export class Grid {
             uvGridMaterial
         )
         this.mesh.position.y = 0
-        this.mesh.roration.x = - Math.PI * 0.5
+        this.mesh.rotation.x = - Math.PI * 0.5
 
         const defaultRespawn = this.game.respawns.getDefault()
         this.mesh.position.x = defaultRespawn.position.x

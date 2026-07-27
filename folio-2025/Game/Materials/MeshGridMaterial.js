@@ -1,4 +1,4 @@
-import { clamp, color, Fn, If, normalWorld, positionLocal, positionWorld, smoothstep, step, uniform, vec2 } from "three/tsl";
+import { clamp, color, Fn, If, mix, normalWorld, positionLocal, positionWorld, smoothstep, step, uniform, uv, vec2, vec4 } from "three/tsl";
 import { Color, NodeMaterial } from "three/webgpu";
 
 export const toMask = Fn(([ normal ]) => {
@@ -85,14 +85,14 @@ export class MeshGridMaterial extends NodeMaterial {
         this.reference = 'uv'
         this.antialiased = true
         this.color = new Color(0x000000)
-        this.line = [
+        this.lines = [
             new MeshGridMaterialLine()
         ]
 
         this.setValues(parameters)
 
         const mask = toMask(normalWorld)
-        const maskDerivate = mask.fwidth.length().oneMinus().clamp(0, 1)
+        const maskDerivate = mask.fwidth().length().oneMinus().clamp(0, 1)
 
         let uvReference = uv()
         if (this.reference === 'worldTriplanar') {
@@ -125,7 +125,7 @@ export class MeshGridMaterial extends NodeMaterial {
         this.outputNode = vec4(gridColor, 1)
     }
 
-    get scale(value) {
+    get scale() {
         return this.scaleNode.value
     }
 

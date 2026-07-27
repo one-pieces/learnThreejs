@@ -1,4 +1,5 @@
 import { Game } from '../Game.js'
+import { Grid } from './Grid.js'
 
 export class World {
     constructor() {
