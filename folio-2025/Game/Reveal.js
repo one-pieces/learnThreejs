@@ -28,8 +28,8 @@ export class Reveal {
         if (step === 0) {
             // Intro loader => Hide circle
             // this.game.world.intro.circle.hide(() => {
-            //     // Grid
-            //     this.game.world.grid.show()
+                // Grid
+                this.game.world.grid.show()
 
             //     // Reveal
             //     this.distance.value = 0
@@ -37,10 +37,11 @@ export class Reveal {
             //     gsap
             // })
         }
+        this.step = step
     }
 
     update() {
-        this.color.value.copy(this.game.dayCycles.properties.revealColor.value)
-        this.intensity.value = this.game.dayCycles.properties.revealIntensity.value * this.intensityMultiplier
+        // this.color.value.copy(this.game.dayCycles.properties.revealColor.value)
+        // this.intensity.value = this.game.dayCycles.properties.revealIntensity.value * this.intensityMultiplier
     }
 }

@@ -1,6 +1,6 @@
 import * as THREE from 'three/webgpu'
 import { Game } from '../Game'
-import { float, Fn, frontFacing, If, normalWorld, vec4 } from 'three/tsl'
+import { color, float, Fn, frontFacing, If, normalWorld, vec4 } from 'three/tsl'
 
 export class MeshDefaultMaterial extends THREE.MeshLambertNodeMaterial {
     constructor(parameters = {}) {
@@ -47,8 +47,7 @@ export class MeshDefaultMaterial extends THREE.MeshLambertNodeMaterial {
          * Output node
          */
         this.outputNode = Fn(() => {
-            const baseColor = this._colorNode.toVal()
-            const outputColor = this._colorNode.toVal()
+            const outputColor = this._colorNode
 
             // Normal orientation
             const reorientedNormal = this._normalNode.toVar()
@@ -58,6 +57,6 @@ export class MeshDefaultMaterial extends THREE.MeshLambertNodeMaterial {
 
             // Output
             return vec4(outputColor, this._alphaNode)
-        })
+        })()
     }
 }

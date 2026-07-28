@@ -20,11 +20,11 @@ export class ResourcesLoader {
             loader = new THREE.TextureLoader()
         } else if (_type === 'textureKtx') {
             loader = new KTX2Loader()
-            loader.setTranscoderPath('./basis/')
+            loader.setTranscoderPath('/basis/')
             loader.detectSupport(this.game.rendering.renderer)
         } else if (_type === 'draco') {
             loader = new DRACOLoader()
-            loader.setDecoderPath('./draco/')
+            loader.setDecoderPath('/draco/')
             loader.preload()
         } else if (_type === 'gltf') {
             const dracoLoader = this.getLoader('draco')
@@ -71,12 +71,6 @@ export class ResourcesLoader {
                 this.cache.set(_file[1], _resource)
             }
 
-            // Error
-            const error = (_file) => {
-                console.log(`Resources > Couldn't load file ${_file[1]}`)
-                reject(_file[1])
-            }
-
             // Each file
             for (const _file of _files) {
                 // In cache
@@ -88,10 +82,14 @@ export class ResourcesLoader {
                 } else {
                     // Not in cache
                     const loader = this.getLoader(_file[2])
+
                     loader.load(_file[1], resource => {
                         save(_file, resource)
                         progress()
-                    }, undefined, error)
+                    }, undefined, (err) => {
+                        console.log(`Resources > Couldn't load file ${_file[1]}`, err)
+                        reject(_file[1])
+                    })
                 }
             }
         })

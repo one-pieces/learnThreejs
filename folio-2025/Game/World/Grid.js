@@ -1,8 +1,6 @@
 import * as THREE from 'three/webgpu'
-import { Fn, positionWorld, reference } from "three/tsl";
 import { Game } from "../Game";
 import { MeshGridMaterial, MeshGridMaterialLine } from "../Materials/MeshGridMaterial";
-import { MeshDefaultMaterial } from '../Materials/MeshDefaultMaterial';
 
 export class Grid {
     constructor() {
@@ -19,25 +17,10 @@ export class Grid {
 
         const uvGridMaterial = new MeshGridMaterial({
             color: 0x1b191f,
-            scale: 0.001,
             anttialiased: true,
-            reference: 'uv',
+            reference: 'worldY',
             side: THREE.DoubleSide,
             lines
-        })
-
-        const defaultMaterial = new MeshDefaultMaterial({
-            colorNode: uvGridMaterial.outputNode.rgb,
-            hasWater: false,
-            hasReveal: false,
-            hasLightBounce: false
-        })
-
-        uvGridMaterial.outputNode = Fn(() => {
-            const distanceToCenter = positionWorld.xz.sub(this.game.reveal.position2Uniform).length()
-            distanceToCenter.lessThan(this.game.reveal.distance).discard()
-
-            return defaultMaterial.outputNode
         })
 
         this.mesh = new THREE.Mesh(

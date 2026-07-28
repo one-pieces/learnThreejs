@@ -2,9 +2,11 @@ import * as THREE from 'three/webgpu'
 
 import { World } from './World/World.js'
 import { ResourcesLoader } from './ResourcesLoader.js'
+import { Quality } from './Quality.js'
 import { Respawns } from './Respawns.js'
 import { Reveal } from './Reveal.js'
 import { Rendering } from './Rendering.js'
+import { View } from './View.js'
 import { Viewport } from './Viewport.js'
 import { Ticker } from './Ticker.js'
 
@@ -32,6 +34,7 @@ export class Game {
         // First batch for intro
         this.scene = new THREE.Scene()
         this.resourcesLoader = new ResourcesLoader()
+        this.quality = new Quality()
         this.ticker = new Ticker()
 
         this.viewport = new Viewport(this.domELement)
@@ -42,12 +45,13 @@ export class Game {
         const compressedModelSuffix = compressed ? '-compressed' : ''
         const cb = '?cb=1'
         this.resources = await this.resourcesLoader.load([
-            ['respawnsReferencesModel',     `respawns/respawnsReferences${compressedModelSuffix}.glb${cb}`, 'gltf'],
+            ['respawnsReferencesModel',     `/respawns/respawnsReferences${compressedModelSuffix}.glb${cb}`, 'gltf'],
         ])
 
-        this.rendering.setPostprocessing()
-
         this.respawns = new Respawns(import.meta.env.VITE_PLAYER_SPAWN || 'landing')
+        this.view = new View()
+        this.rendering.setPostprocessing()
+        this.rendering.start()
         this.reveal = new Reveal()
 
         this.world = new World()

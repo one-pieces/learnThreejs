@@ -1,4 +1,4 @@
-import { clamp, color, Fn, If, mix, normalWorld, positionLocal, positionWorld, smoothstep, step, uniform, uv, vec2, vec4 } from "three/tsl";
+import { clamp, color, Fn, If, mix, normalWorld, positionLocal, positionWorld, smoothstep, step, uniform, uv, vec2, vec3, vec4 } from "three/tsl";
 import { Color, NodeMaterial } from "three/webgpu";
 
 export const toMask = Fn(([ normal ]) => {
